@@ -1,0 +1,113 @@
+[gd_scene load_steps=2 format=3 uid="uid://d32d52fm18b3b"]
+
+[ext_resource type="Script" path="res://Register.gd" id="1_rfd3e"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rfd3e")
+
+[node name="RegisterButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -381.5
+offset_top = -189.0
+offset_right = -282.5
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Register ME"
+
+[node name="Username" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -140.0
+offset_right = -244.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Your Username???"
+
+[node name="Password" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -37.0
+offset_right = -244.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Your Password???"
+
+[node name="GetInfo" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.5
+offset_top = -192.0
+offset_right = 119.5
+offset_bottom = -161.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "give ME info bout dat user!"
+
+[node name="UserId" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -40.0
+offset_right = 100.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "User ID?????????"
+
+[node name="UserInfo" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 787.0
+offset_top = 151.0
+offset_right = 949.0
+offset_bottom = 352.0
+text = "Here will be User Info!"
+
+[node name="ResponceId" type="Label" parent="."]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 397.0
+offset_right = 387.0
+offset_bottom = 423.0
+text = "here will be user id after registration"
+horizontal_alignment = 1
+
+[node name="POST" type="HTTPRequest" parent="."]
+
+[node name="GET" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="RegisterButton" to="." method="_on_register_button_pressed"]
+[connection signal="pressed" from="GetInfo" to="." method="_on_get_info_pressed"]
+[connection signal="request_completed" from="POST" to="." method="_on_post_request_completed"]
+[connection signal="request_completed" from="GET" to="." method="_on_get_request_completed"]
