@@ -1,0 +1,12 @@
+POST http://127.0.0.1:8000/users
+Content-Type: application/json
+
+
+{
+  "username": "BearSafari",
+  "password": "aaa",
+  "level": 1
+}
+
+###
+GET http://127.0.0.1:8000/users/1
