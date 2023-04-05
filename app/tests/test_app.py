@@ -1,10 +1,13 @@
-import unittest
-import app as tested_app
 import json
+import unittest
+
+import importlib.util
+spec = importlib.util.spec_from_file_location("tested_app", "../src/app.py")
+tested_app = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(tested_app)
 
 
 class FlaskAppTests(unittest.TestCase):
-
     def setUp(self):
         tested_app.app.config['TESTING'] = True
         self.app = tested_app.app.test_client()
