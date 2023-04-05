@@ -22,7 +22,8 @@ jobs:
         pylint --fail-under=5 $(git ls-files '*.py')
     - name: Running unit tests
       run: |
-        coverage run app/app_test.py
+        cd app/tests
+        ./run-test.sh
     - name: Unit test report
       run: |
         coverage report
