@@ -20,9 +20,6 @@ jobs:
     - name: Analysing the code with pylint
       run:
         pylint --fail-under=5 $(git ls-files '*.py')
-    - name: Running unit tests
-      run: |
-        cd app/tests && bash run-tests.sh  
     - name: Unit test report
       run: |
-        coverage report
+        cd app/tests && bash run-tests.sh  
