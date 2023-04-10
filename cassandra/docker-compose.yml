@@ -1,0 +1,49 @@
+version : "3.9"
+name: "hunters"
+
+services:
+  cassandra-node-1:
+    container_name: "cassandra-node-1"
+    image: cassandra:latest
+    networks:
+        - cassandra-network
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  cassandra-node-2:
+    container_name: "cassandra-node-2"
+    image: cassandra:latest
+    networks:
+        - cassandra-network
+    environment:
+      CASSANDRA_SEEDS: "cassandra-node-1"
+    depends_on:
+      cassandra-node-1:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  cassandra-node-3:
+    container_name: "cassandra-node-3"
+    image: cassandra:latest
+    restart: unless-stopped
+    networks:
+        - cassandra-network
+    environment:
+      CASSANDRA_SEEDS: "cassandra-node-1, cassandra-node-2"
+    depends_on:
+      cassandra-node-2:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  cassandra-network:
+    name: "cassandra-network"
