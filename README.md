@@ -2,6 +2,22 @@
 Or whatever we'll call this...
 
 
+## How to launch and configure Cassandra
+
+Go into the `cassandra` directory - **Note: you MUST be inside the `cassandra` directory to continue!**
+
+```sh
+./run-and-configure.sh
+```
+
+_This will create a cluster and create tables with proper replication inside._
+
+To **stop** the cluster(from the `cassandra` directory):
+
+```sh
+./stop.sh
+```
+
 ## How to write tests
 
 1. Head into the `app/tests` directory.
