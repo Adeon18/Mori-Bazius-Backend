@@ -5,6 +5,16 @@ networks:
     driver: bridge
 
 services:
+  register-service:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      register:
+    depends_on:
+      - postgresql
   postgresql:
     image: postgres:latest
     restart: always
