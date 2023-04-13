@@ -1,9 +1,8 @@
 import datetime
-
+from typing import Union
 from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
-from typing import Union
 import psycopg2
 
 
@@ -34,15 +33,13 @@ class RegisterController:
             result = self.cursor.fetchone()
             print(result)
             user = User(uid=result[0], username=result[1], password=result[2], created_on=result[3])
-            # user.uid = result[0]
-            # user.username = result[1]
-            # user.password = result[2]
-            # user.created_on = result[3]
             return user
 
         @self.app.post("/user")
         def post_user(user: User) -> int:
-            self.cursor.execute(f"INSERT INTO users(username, password, created_on) VALUES ('{user.username}', '{str(user.password)}', current_timestamp) RETURNING uid")
+            self.cursor.execute(
+                f"INSERT INTO users(username, password, created_on) VALUES ('{user.username}', '{str(user.password)}',\
+                 current_timestamp) RETURNING uid")
             self.conn.commit()
             result = self.cursor.fetchone()
             print(result[0])
