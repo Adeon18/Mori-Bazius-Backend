@@ -1,0 +1,20 @@
+version : "3.9"
+name: "hunters"
+
+services:
+  game-data:
+    container_name: "game-data"
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    networks:
+      - cassandra-network
+    environment:
+      CASSANDRA_ENDPOINT: "cassandra-node-1"
+      CASSANDRA_PORT: 9042
+    ports:
+      - "8000:8000"
+
+networks:
+  cassandra-network:
+    name: "cassandra-network"
