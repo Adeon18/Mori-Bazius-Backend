@@ -17,3 +17,4 @@ typing_extensions==4.5.0
 utils==1.0.1
 Werkzeug==2.2.3
 wrapt==1.15.0
+pydantic==1.10.7
