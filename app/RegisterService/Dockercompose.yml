@@ -1,0 +1,52 @@
+version: "3"
+
+networks:
+  register:
+    driver: bridge
+
+services:
+  register-service:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      register:
+    depends_on:
+      - postgresql
+  postgresql:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /var/lib/postgresql/data
+    networks:
+      - register
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    ports:
+      - "82:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - postgresql
+    links:
+      - postgresql
+    networks:
+      - register
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+ pgadmin-data:
