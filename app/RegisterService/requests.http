@@ -1,0 +1,23 @@
+POST localhost:8080/user
+Content-Type: application/json
+
+{
+  "username": "dude",
+  "password": "dude"
+}
+
+
+###
+
+
+POST localhost:8080/user
+Content-Type: application/json
+
+{
+  "username": "dude1",
+  "password": "dude"
+}
+
+###
+
+GET localhost:8080/user/5
