@@ -15,12 +15,14 @@ class App:
 
         @self.app.post("/game_data/stats")
         async def game_data_set_stats(player_id: int, stats: Stats):
-            return self.service.set_game_stats(player_id, stats)
+            ret = self.service.set_game_stats(player_id, stats)
+            return {"topic": ret.topic}
 
         @self.app.get("/game_data/resources")
         async def game_data_resources(player_id: int):
             return self.service.get_game_resources(player_id)
 
-        @self.app.get("/game_data/resources")
+        @self.app.post("/game_data/resources")
         async def game_data_set_resources(player_id: int, resources: Resources):
-            return self.service.set_game_resources(player_id, resources)
+            ret = self.service.set_game_resources(player_id, resources)
+            return {"topic": ret.topic}
