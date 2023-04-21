@@ -9,7 +9,7 @@ from domain.stats import Stats
 class CassandraRepository(GameDataRepository):
     def __init__(self) -> None:
         cassandra_endpoint = os.getenv("CASSANDRA_ENDPOINT")
-        cassandra_endpoint = cassandra_endpoint if cassandra_endpoint is not None else "cassandra"
+        cassandra_endpoint = cassandra_endpoint if cassandra_endpoint is not None else "localhost"
         cassandra_port = os.getenv("CASSANDRA_PORT")
         cassandra_port = cassandra_port if cassandra_port is not None else 9042
 
