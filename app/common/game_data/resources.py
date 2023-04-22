@@ -5,7 +5,7 @@ class Resources(BaseModel):
 
     # Utils
     monster_bone: int | None = None
-    leather_scrap: int | None = None
+    leather_scraps: int | None = None
     oil: int | None = None
 
     # Armor
@@ -14,9 +14,9 @@ class Resources(BaseModel):
 
     # Swords
     silver_sword: int | None = None
-    silver_kingslayers_sword: int | None = None
+    kingslayers_silver_sword: int | None = None
     steel_sword: int | None = None
-    steel_kingslayers_sword: int | None = None
+    kingslayers_steel_sword: int | None = None
 
     # Diamonds
     diamond_dust: int | None = None
@@ -34,11 +34,6 @@ class Resources(BaseModel):
     dark_steel_ore: int | None = None
     meteorite_silver_ore: int | None = None
     green_gold_ore: int | None = None
-
-    # Mosters
-    brook: int | None = None
-    kikimora: int | None = None
-    wyvern: int | None = None
 
     # Herbs
     arenaria: int | None = None

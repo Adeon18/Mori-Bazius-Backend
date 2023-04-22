@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --tag game_data_service .
+docker build -f `pwd`/Dockerfile --tag game_data_service ..

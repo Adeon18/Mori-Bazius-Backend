@@ -1,9 +1,13 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # I LOVE PYTHON
+
 from fastapi import FastAPI
 
 from service.game_data_service import GameDataService
 
-from domain.stats import Stats
-from domain.resources import Resources
+from common.game_data.stats import Stats
+from common.game_data.resources import Resources
 
 app = FastAPI()
 

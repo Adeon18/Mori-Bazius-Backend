@@ -1,5 +1,5 @@
-from domain.resources import Resources
-from domain.stats import Stats
+from common.game_data.resources import Resources
+from common.game_data.stats import Stats
 
 class GameDataRepository:
     def __init__(self) -> None:
