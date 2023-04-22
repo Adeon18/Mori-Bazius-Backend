@@ -6,14 +6,9 @@ CREATE TABLE player_stats_by_player_id (
     player_id int,
     level int,
     power int,
-    wins int,
-    loses int,
-    win_rate_percent int,
-    total_upgr int,
-    upgr_0 int,
-    upgr_1 int,
-    upgr_2 int,
-    upgr_3 int,
+    exp int,
+    hunters int,
+    masters int,
     PRIMARY KEY (player_id, power)
 );
 
@@ -22,7 +17,7 @@ CREATE TABLE game_data_by_player_id (
 
     // Utils
     monster_bone int,
-    leather_scrap int,
+    leather_scraps int,
     oil int,
 
     // Armor
@@ -31,9 +26,9 @@ CREATE TABLE game_data_by_player_id (
 
     // Swords
     silver_sword int,
-    silver_kingslayers_sword int,
+    kingslayers_silver_sword int,
     steel_sword int,
-    steel_kingslayers_sword int,
+    kingslayers_steel_sword int,
 
     // diamonds
     diamond_dust int,
@@ -51,11 +46,6 @@ CREATE TABLE game_data_by_player_id (
     dark_steel_ore int,
     meteorite_silver_ore int,
     green_gold_ore int,
-
-    // mosters
-    brook int,
-    kikimora int,
-    wyvern int,
 
     // herbs
     arenaria int,
