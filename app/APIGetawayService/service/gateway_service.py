@@ -1,5 +1,5 @@
-from domain.stats import Stats
-from domain.resources import Resources
+from common.game_data.stats import Stats
+from common.game_data.resources import Resources
 from kafka import KafkaProducer
 
 import json
@@ -40,3 +40,6 @@ class GatewayService:
             stats.dict()).encode()).get(timeout=10)
 
         return metadata
+
+    def get_game_leagueboard(self, limit):
+        return {"limit": limit}

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from service.gateway_service import GatewayService
-from domain.stats import Stats
-from domain.resources import Resources
+from common.game_data.stats import Stats
+from common.game_data.resources import Resources
 
 
 class App:
@@ -26,3 +26,7 @@ class App:
         async def game_data_set_resources(player_id: int, resources: Resources):
             ret = self.service.set_game_resources(player_id, resources)
             return {"topic": ret.topic}
+
+        @self.app.get("/game_data/leagueboard")
+        async def game_data_stats(limit: int):
+            return self.service.get_game_leagueboard(limit)
