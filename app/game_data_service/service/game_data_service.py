@@ -11,9 +11,8 @@ from common.game_data.stats import Stats
 class GameDataService:
     def __init__(self, repo: GameDataRepository) -> None:
         self.repo = repo
-        kafka_address = os.getenv("KAFKA_ADDRESS")
-        kafka_address = kafka_address if kafka_address is not None else "localhost:29092"
-        print("Hello from constructor")
+        kafka_address = os.getenv("KAFKA_ADDRESS", "localhost:29092")
+        
         self.event_loop = asyncio.get_event_loop()
         self.data_consumer = AIOKafkaConsumer("game-data", loop=self.event_loop, bootstrap_servers=kafka_address)
         self.stats_consumer = AIOKafkaConsumer("game-stats", loop=self.event_loop, bootstrap_servers=kafka_address)
@@ -40,7 +39,9 @@ class GameDataService:
 
         try:
             async for msg in self.data_consumer:
-                print("consumed data")
+                print(f"consumed data: {msg.value.decode('utf-8')}")
+                resources = Resources.parse_raw(msg.value)
+                self.set_resources(resources.player_id, resources)
         finally:
             await self.data_consumer.stop()
 
@@ -49,7 +50,9 @@ class GameDataService:
 
         try:
             async for msg in self.stats_consumer:
-                print("consumed stats")
+                print(f"consumed stats: {msg.value.decode('utf-8')}")
+                stats = Stats.parse_raw(msg.value)
+                self.set_stats(stats.player_id, stats)
         finally:
             await self.stats_consumer.stop()
 
