@@ -3,15 +3,28 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # I LOVE PYTHON
 
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
 from service.game_data_service import GameDataService
-
 from common.game_data.stats import Stats
 from common.game_data.resources import Resources
 
-app = FastAPI()
 
 service = GameDataService.new_service_with_cassandra()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    service.create_consume_data_task()
+    service.create_consume_stats_task()
+
+    yield
+
+    # Shutdown
+    await service.shutdown_consumers()
+
+app = FastAPI(lifespan=lifespan)
+
 
 @app.get("/stats")
 async def stats(player_id: int):

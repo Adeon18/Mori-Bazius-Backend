@@ -1,6 +1,6 @@
 #! /bin/bash
 
-NETWORK_NAME="kafka-network"
+NETWORK_NAME="cassandra-network"
 ZOOKEPER_NAME="zookeeper-server"
 KAFKA_NAME="kafka-server"
 
