@@ -1,6 +1,7 @@
 from User import User
 from RegisterRepositoryPostgress import RegisterRepositoryPostgress
 
+
 class RegisterService:
     def __init__(self):
         self.repository = RegisterRepositoryPostgress()
