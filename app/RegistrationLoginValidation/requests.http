@@ -1,0 +1,41 @@
+POST localhost:8080/user
+Content-Type: application/json
+
+{
+  "username": "dude",
+  "password": "dude"
+}
+
+
+###
+POST localhost:8081/login/user
+Content-Type: application/json
+
+{
+  "username": "dude",
+  "password": "dude"
+}
+
+###
+POST localhost:8082/validate
+Content-Type: application/json
+
+{
+  "uid": 1,
+  "token": "432dfa36995306e1c47d5109d284187564e206a2"
+}
+
+
+###
+
+POST localhost:8080/user
+Content-Type: application/json
+
+{
+  "username": "dude1",
+  "password": "dude"
+}
+
+###
+
+GET localhost:8080/user/1

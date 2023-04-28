@@ -7,7 +7,7 @@ networks:
 services:
   register-service:
     build:
-      context: ./src
+      context: RegisterService
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -15,6 +15,29 @@ services:
       register:
     depends_on:
       - postgresql
+  login-service:
+    build:
+      context: LoginService
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    networks:
+      register:
+    depends_on:
+      - postgresql
+
+  validation-service:
+    build:
+      context: ValidationService
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    networks:
+      register:
+    depends_on:
+      - postgresql
+
+
   postgresql:
     image: postgres:latest
     restart: always
