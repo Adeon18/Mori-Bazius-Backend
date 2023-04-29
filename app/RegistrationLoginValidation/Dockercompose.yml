@@ -14,7 +14,8 @@ services:
     networks:
       register:
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
   login-service:
     build:
       context: LoginService
@@ -24,7 +25,8 @@ services:
     networks:
       register:
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
 
   validation-service:
     build:
@@ -35,7 +37,8 @@ services:
     networks:
       register:
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
 
 
   postgresql:
@@ -48,6 +51,11 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       PGDATA: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "users"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - register
     volumes:
