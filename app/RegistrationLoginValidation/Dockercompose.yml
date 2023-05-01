@@ -2,8 +2,8 @@ version: "3"
 
 networks:
   hunters-game-network:
-    name: "hunters-game-network"
-
+    driver: bridge
+   
 services:
   register-service:
     build:
@@ -57,7 +57,7 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - register
+      - hunters-game-network
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
@@ -75,7 +75,7 @@ services:
     links:
       - postgresql
     networks:
-      - register
+      - hunters-game-network
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
