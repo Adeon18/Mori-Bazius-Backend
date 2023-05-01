@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-NETWORK_NAME="cassandra-network"
+NETWORK_NAME="hunters-game-network"
 ZOOKEPER_NAME="zookeeper-server"
 KAFKA_NAME="kafka-server"
 TOPIC_NAME1="game-data"

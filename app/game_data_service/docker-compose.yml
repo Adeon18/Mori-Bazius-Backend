@@ -8,7 +8,7 @@ services:
       dockerfile: ./Dockerfile
       context: .
     networks:
-      - cassandra-network
+      - hunters-game-network
     environment:
       CASSANDRA_ENDPOINT: "cassandra-node-1"
       CASSANDRA_PORT: 9042
@@ -16,5 +16,5 @@ services:
       - "8000:8000"
 
 networks:
-  cassandra-network:
-    name: "cassandra-network"
+  hunters-game-network:
+    name: "hunters-game-network"
