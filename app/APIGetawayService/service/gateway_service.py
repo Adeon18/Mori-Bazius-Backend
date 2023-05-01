@@ -1,6 +1,9 @@
 from common.game_data.stats import Stats
 from common.game_data.resources import Resources
+from common.game_data.user import User
 from kafka import KafkaProducer
+
+import requests
 
 import json
 
@@ -8,10 +11,27 @@ KAFKA_SERVER = 'kafka-server:9092'
 GAME_DATA_TOPIC = 'game-data'
 GAME_STATS_TOPIC = 'game-stats'
 
+REGISTER_SERVICE_URL = 'http://'
+
 
 class GatewayService:
     def __init__(self):
         self.producer = KafkaProducer(bootstrap_servers=[KAFKA_SERVER])
+
+    def verify_request(self, token: str):
+        pass
+
+    def handle_register_operation(self, user_data: User):
+        response = requests.post(
+            url="http://register-service:8080/user/", json={"username": user_data.username, "password": user_data.password})
+
+        return response.text
+
+    def handle_login_operation(self, user_data: User):
+        response = requests.post(
+            url="http://login-service:8080/login/user", json=dict(user_data))
+
+        return response.text
 
     def get_game_resources(self, player_id: int):
         # Verify the sender
