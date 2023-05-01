@@ -6,7 +6,7 @@ services:
     container_name: "cassandra-node-1"
     image: cassandra:latest
     networks:
-        - cassandra-network
+        - hunters-game-network
     healthcheck:
       test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
       interval: 30s
@@ -18,7 +18,7 @@ services:
     container_name: "cassandra-node-2"
     image: cassandra:latest
     networks:
-        - cassandra-network
+        - hunters-game-network 
     environment:
       CASSANDRA_SEEDS: "cassandra-node-1"
     depends_on:
@@ -34,7 +34,7 @@ services:
     image: cassandra:latest
     restart: unless-stopped
     networks:
-        - cassandra-network
+        - hunters-game-network
     environment:
       CASSANDRA_SEEDS: "cassandra-node-1, cassandra-node-2"
     depends_on:
@@ -47,6 +47,6 @@ services:
       retries: 5
 
 networks:
-  cassandra-network:
-    name: "cassandra-network"
+  hunters-game-network:
+    name: "hunters-game-network"
 
