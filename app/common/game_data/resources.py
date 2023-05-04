@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 
+
 class Resources(BaseModel):
     player_id: int | None = None
+    token: str | None = None
 
     # Utils
     monster_bone: int | None = None

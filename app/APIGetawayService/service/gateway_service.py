@@ -11,25 +11,34 @@ KAFKA_SERVER = 'kafka-server:9092'
 GAME_DATA_TOPIC = 'game-data'
 GAME_STATS_TOPIC = 'game-stats'
 
-REGISTER_SERVICE_URL = 'http://'
+REGISTER_SERVICE_URL = 'http://register-service:8080/user/'
+LOGIN_SERVICE_URL = 'http://login-service:8080/login/user/'
+VALIDATION_SERVICE_URL = 'http://validation-service:8080/validate/'
 
 
 class GatewayService:
     def __init__(self):
         self.producer = KafkaProducer(bootstrap_servers=[KAFKA_SERVER])
 
-    def verify_request(self, token: str):
-        pass
+    # Returns a boolean whether the validation was successful
+    def verify_request(self, uid: str, token: str):
+        response = requests.post(
+            url=VALIDATION_SERVICE_URL, json={"uid": uid, "token": token})
+
+        if response.text == "true":
+            return True
+
+        return False
 
     def handle_register_operation(self, user_data: User):
         response = requests.post(
-            url="http://register-service:8080/user/", json={"username": user_data.username, "password": user_data.password})
+            url=REGISTER_SERVICE_URL, json={"username": user_data.username, "password": user_data.password})
 
         return response.text
 
     def handle_login_operation(self, user_data: User):
         response = requests.post(
-            url="http://login-service:8080/login/user", json=dict(user_data))
+            url=LOGIN_SERVICE_URL, json=dict(user_data))
 
         return response.text
 
@@ -40,12 +49,15 @@ class GatewayService:
 
     def set_game_resources(self, player_id: int, resources: Resources):
         # Verify the sender
+        if (not self.verify_request(resources.player_id, resources.token)):
+            print("Bad token: " + resources.token, flush=True)
+            return {"success": False}
 
         # sync for now
         metadata = self.producer.send(GAME_DATA_TOPIC, json.dumps(
             resources.dict()).encode()).get(timeout=10)
 
-        return metadata
+        return {"success": True, "topic": metadata.topic}
 
     def get_game_stats(self, player_id: int):
         # Verify the sender
@@ -54,12 +66,15 @@ class GatewayService:
 
     def set_game_stats(self, player_id: int, stats: Stats):
         # Verify the sender
+        if (not self.verify_request(stats.player_id, stats.token)):
+            print("Bad token: " + stats.token, flush=True)
+            return {"success": False}
+
         # set gata in game_data
-        # sync for now
         metadata = self.producer.send(GAME_STATS_TOPIC, json.dumps(
             stats.dict()).encode()).get(timeout=10)
 
-        return metadata
+        return {"success": True, "topic": metadata.topic}
 
     def get_game_leagueboard(self, limit):
         return {"limit": limit}

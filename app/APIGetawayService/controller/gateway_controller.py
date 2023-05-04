@@ -26,8 +26,7 @@ class App:
 
         @self.app.post("/game_data/stats")
         async def game_data_set_stats(player_id: int, stats: Stats):
-            ret = self.service.set_game_stats(player_id, stats)
-            return {"topic": ret.topic}
+            return self.service.set_game_stats(player_id, stats)
 
         @self.app.get("/game_data/resources")
         async def game_data_resources(player_id: int):
@@ -35,8 +34,7 @@ class App:
 
         @self.app.post("/game_data/resources")
         async def game_data_set_resources(player_id: int, resources: Resources):
-            ret = self.service.set_game_resources(player_id, resources)
-            return {"topic": ret.topic}
+            return self.service.set_game_resources(player_id, resources)
 
         @self.app.get("/game_data/leagueboard")
         async def game_data_leagueboard(limit: int):
