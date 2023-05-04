@@ -15,6 +15,9 @@ REGISTER_SERVICE_URL = 'http://register-service:8080/user/'
 LOGIN_SERVICE_URL = 'http://login-service:8080/login/user/'
 VALIDATION_SERVICE_URL = 'http://validation-service:8080/validate/'
 
+STATS_GAME_DATA_URL = 'http://game_data:8000/stats?player_id='
+RESOURCES_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
+
 
 class GatewayService:
     def __init__(self):
@@ -43,15 +46,17 @@ class GatewayService:
         return response.text
 
     def get_game_resources(self, player_id: int):
-        # Verify the sender
-        # get gata from game_data
-        return {"player_id": player_id}
+        response = requests.get(url=RESOURCES_GAME_DATA_URL + str(player_id))
+
+        return response.json()
 
     def set_game_resources(self, player_id: int, resources: Resources):
         # Verify the sender
         if (not self.verify_request(resources.player_id, resources.token)):
             print("Bad token: " + resources.token, flush=True)
             return {"success": False}
+
+        resources.token = None
 
         # sync for now
         metadata = self.producer.send(GAME_DATA_TOPIC, json.dumps(
@@ -60,15 +65,17 @@ class GatewayService:
         return {"success": True, "topic": metadata.topic}
 
     def get_game_stats(self, player_id: int):
-        # Verify the sender
-        # get gata from game_data
-        return {"player_id": player_id}
+        response = requests.get(url=STATS_GAME_DATA_URL + str(player_id))
+
+        return response.json()
 
     def set_game_stats(self, player_id: int, stats: Stats):
         # Verify the sender
         if (not self.verify_request(stats.player_id, stats.token)):
             print("Bad token: " + stats.token, flush=True)
             return {"success": False}
+
+        stats.token = None
 
         # set gata in game_data
         metadata = self.producer.send(GAME_STATS_TOPIC, json.dumps(
