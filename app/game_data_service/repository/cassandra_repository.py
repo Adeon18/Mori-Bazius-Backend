@@ -60,10 +60,11 @@ class CassandraRepository(GameDataRepository):
 
         query = f"""
         INSERT INTO hunters.player_stats_by_player_id 
-        ({", ".join(keys_to_update)}) VALUES ({", ".join([str(v) for v in values_to_update])})
+        ({", ".join(keys_to_update)}) VALUES ({", ".join(["?" for _ in values_to_update])})
         """
+        query = self.session.prepare(query)
 
-        self.session.execute(query)
+        self.session.execute(query, values_to_update)
 
     def set_resources(self, player_id: int, resources: Resources):
         resources_to_update = dict(((key, value) for key, value in vars(resources).items() if value is not None))
@@ -76,7 +77,8 @@ class CassandraRepository(GameDataRepository):
 
         query = f"""
         INSERT INTO hunters.game_data_by_player_id 
-        ({", ".join(keys_to_update)}) VALUES ({", ".join([str(v) for v in values_to_update])})
+        ({", ".join(keys_to_update)}) VALUES ({", ".join(["?" for _ in values_to_update])})
         """
+        query = self.session.prepare(query)
 
-        self.session.execute(query)
+        self.session.execute(query, values_to_update)

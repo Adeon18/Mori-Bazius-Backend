@@ -4,6 +4,7 @@ USE hunters;
 
 CREATE TABLE player_stats_by_player_id (
     player_id int,
+    player_name text,
     level int,
     power int,
     exp int,
@@ -14,6 +15,7 @@ CREATE TABLE player_stats_by_player_id (
 
 CREATE TABLE game_data_by_player_id (
     player_id int,
+    player_name text,
 
     // Utils
     monster_bone int,

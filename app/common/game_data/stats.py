@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 class Stats(BaseModel):
     player_id: int | None = None
+    player_name: str | None = None
     level: int | None = None
     power: int | None = None
     exp: int | None = None
