@@ -5,6 +5,39 @@ Service that accepts information from the game and further passes it onto the ot
 
 ## Usage
 
+### Registration
+
+**POST** registration data, returns `player_id`.
+
+```
+localhost:9000/register
+```
+
+Example of request body:
+```json
+{
+  "username": "Bohdan",
+  "password": "Ruban"
+}
+```
+
+### Login
+
+**POST** login data, returns `token` for the current session.
+
+```
+localhost:9000/login
+```
+
+Example of request body:
+```json
+{
+  "username": "Bohdan",
+  "password": "Ruban"
+}
+```
+
+### Game Data
 
 **GET** the top `limit` most powerful players by power.
 ```
@@ -27,6 +60,9 @@ localhost:9000/game_data/stats?player_id=<player_id>
 Example body of the request:
 ```json
 {
+    "player_id": 0,
+    "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "player_name": "xxxx"
     "power": 0,
     "level": 0,
     "hunters": 0,
@@ -51,6 +87,9 @@ localhost:9000/game_data/resources?player_id=<player_id>
 Example body of request:
 ```json
 {
+    "player_id": 0,
+    "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "player_name": "xxxx"
     "arenaria": 0,
     "nostrix": 0,
     "wolfsbane": 0,
