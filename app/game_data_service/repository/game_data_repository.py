@@ -16,3 +16,6 @@ class GameDataRepository:
 
     def set_resources(self, player_id: int, resources: Resources):
         pass
+
+    def delete_stats(self, stats: Stats):
+        pass

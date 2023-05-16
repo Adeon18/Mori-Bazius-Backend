@@ -1,4 +1,5 @@
 import os
+from common.game_data.stats import Stats
 from cassandra.cluster import Cluster
 
 from repository.game_data_repository import GameDataRepository
@@ -82,3 +83,10 @@ class CassandraRepository(GameDataRepository):
         query = self.session.prepare(query)
 
         self.session.execute(query, values_to_update)
+    
+    def delete_stats(self, stats: Stats):
+        query = f"""
+        DELETE FROM hunters.player_stats_by_player_id WHERE player_id = {stats.player_id}
+        """
+        
+        res = self.session.execute(query)
