@@ -11,7 +11,7 @@ CREATE TABLE player_stats_by_player_id (
     hunters int,
     masters int,
     PRIMARY KEY (player_id, power)
-);
+) WITH CLUSTERING ORDER BY (power DESC);
 
 CREATE TABLE game_data_by_player_id (
     player_id int,

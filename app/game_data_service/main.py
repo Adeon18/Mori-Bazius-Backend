@@ -44,3 +44,7 @@ async def resources(player_id: int):
 async def update_resources(player_id: int, resources: Resources):
     service.set_resources(player_id, resources)
     return resources
+
+@app.get("/leaderboard")
+async def leaderboard(limit: int):
+    return service.get_leaderboard(limit)

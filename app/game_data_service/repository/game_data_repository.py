@@ -19,3 +19,6 @@ class GameDataRepository:
 
     def delete_stats(self, stats: Stats):
         pass
+
+    def get_leaderboard(self, limit: int):
+        pass
