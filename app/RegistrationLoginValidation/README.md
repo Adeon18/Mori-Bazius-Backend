@@ -1,5 +1,5 @@
 ## Launch
-```docker compose up --build```  
+```docker compose up```  
 it launches PostgreSQL server, creates an empy table, launches PostgreSQL admin, register, validation, and login services  
 login and register services may die immediately cause postgress takes time to start and they try to connect to it (idk how to fix, just relaunch them)  
 
@@ -7,7 +7,7 @@ login and register services may die immediately cause postgress takes time to st
 it has 2 RestAPI endpoints: ```GET "/user/{uid}"``` and ```POST "/user"```  
 uid for first one is int, and user for second one is class User  
 ```GET "/user/{uid}"``` returns instance of User class
-```POST "/user"```  returns int which is user id
+```POST "/user"```  returns UidTok class which has 2 fields: uid and token. Effectively, it registers and logins a new user instantly.
 
 #### requests examples
 ```
@@ -26,7 +26,7 @@ GET localhost:8080/user/1
 
 ## Login Service
 connects to PostgreSQL server, has 1 RestAPI endpoint ```POST "/login/user/"```  
-returns the token for the session of player
+returns the UidTok class which is uid of player and his token for the session
 
 #### requests examples
 ```

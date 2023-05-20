@@ -11,12 +11,9 @@ class LoginController:
         self.service = LoginService()
 
         @self.app.post("/login/user/")
-        def post_user(user: User):
-            token = self.service.try_login_user(user)
-            if token == 401:
-                raise HTTPException(status_code=401, detail="Invalid Credentials")
-            else:
-                return token
+        def login_user(user: User):
+            logged_user = self.service.try_login_user(user)
+            return logged_user
 
 
 controller = LoginController()

@@ -15,7 +15,4 @@ class LoginRepositoryPostgress:
     def get_user_uid(self, user: User):
         self.cursor.execute(f"SELECT * FROM users WHERE username='{user.username}' AND password='{user.password}'")
         res = self.cursor.fetchone()
-        if res is None:
-            return -1
-        else:
-            return res
+        return res

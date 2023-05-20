@@ -1,12 +1,8 @@
 from fastapi import FastAPI
 import uvicorn
-from User import User
+from User import UidTok
 from ValidationService import ValidationService
 from pydantic import BaseModel
-
-class UidTok(BaseModel):
-    uid: int
-    token: str
 
 
 class LoginController:
