@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from User import User
+from User import User, UidTok
 from RegisterService import RegisterService
 
 
@@ -15,9 +15,9 @@ class RegisterController:
             return user
 
         @self.app.post("/user")
-        def post_user(user: User) -> int:
-            uid = self.service.add_user(user)
-            return uid
+        def post_user(user: User) -> UidTok:
+            uid_tok = self.service.add_user(user)
+            return uid_tok
 
 
 controller = RegisterController()

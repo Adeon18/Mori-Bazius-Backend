@@ -15,7 +15,4 @@ class ValidationService:
 
     def validate_user(self, uid, token):
         stored_token = self.repository.get_user_token(uid)
-        if token == stored_token and stored_token != "none":
-            return True
-        else:
-            return False
+        return token == stored_token and stored_token != "none"

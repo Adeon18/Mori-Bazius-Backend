@@ -8,3 +8,7 @@ class User(BaseModel):
     password: str
     uid: Union[int, None] = None
     created_on: Union[datetime.datetime, None] = None
+
+class UidTok(BaseModel):
+    uid: int
+    token: str
