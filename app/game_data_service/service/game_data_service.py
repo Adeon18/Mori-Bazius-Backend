@@ -75,3 +75,6 @@ class GameDataService:
     async def shutdown_consumers(self):
         await self.data_consumer.stop()
         await self.stats_consumer.stop()
+
+    def get_leaderboard(self, limit: int):
+        return self.repo.get_leaderboard(limit)

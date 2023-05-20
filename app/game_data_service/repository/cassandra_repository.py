@@ -1,4 +1,6 @@
 import os
+import json
+from collections import namedtuple
 from common.game_data.stats import Stats
 from cassandra.cluster import Cluster
 
@@ -90,3 +92,24 @@ class CassandraRepository(GameDataRepository):
         """
         
         res = self.session.execute(query)
+
+    def get_leaderboard(self, limit: int):
+        query = f"""
+        SELECT * FROM hunters.player_stats_by_player_id
+        """
+        if limit is not None:
+            query += f" LIMIT {limit}"
+
+
+        result_set = self.session.execute(query)
+
+        # This is stupid, but it doesn't work any other way
+        column_names = result_set.column_names
+        Row = namedtuple('Row', column_names)
+
+        leaderboard_data = []
+        for row in result_set:
+            row_data = Row(*row)
+            leaderboard_data.append(row_data._asdict())
+
+        return leaderboard_data
