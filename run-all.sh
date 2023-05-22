@@ -9,6 +9,7 @@ cd kafka
 cd ..
 
 cd app/game_data_service
+./build.sh
 ./run.sh
 cd ./../..
 
