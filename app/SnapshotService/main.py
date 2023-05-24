@@ -4,51 +4,30 @@ import os
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..')))  # I LOVE PYTHON
 
-from repository.SnapshotServiceRepository import SnapshotServiceRepository
+from service.snapshot_service import SnapShotService
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from datetime import datetime
 
-rep = SnapshotServiceRepository();
+service = SnapShotService()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    asyncio.get_event_loop().create_task(make_snapshot())
-
+    asyncio.get_event_loop().create_task(service.make_stat_snapshot())
+    asyncio.get_event_loop().create_task(service.make_resource_snapshot())
     yield
-
 
 
 app = FastAPI(lifespan=lifespan)
 
 
-async def make_snapshot():
-    while True:
-        current_time = datetime.now()
-        time_string = current_time.strftime("%Y-%m-%d-%H-%M")
+@app.get("/logged_stats")
+async def logged_stats(player_id: int, last_minutes: int):
+    return service.get_last_N_minute_stats(player_id, last_minutes)
 
-        # Add your processing logic here
-        stats = rep.get_all_stats()
-        for stat in stats:
-            stat["time"] = time_string
-        rep.add_stat_snapshot(stats)
-        print("Added stats snapshit at " + time_string)
-
-        # Add your processing logic here
-        resources = rep.get_all_resources()
-        for res in resources:
-            res["time"] = time_string
-        rep.add_resource_snapshot(resources)
-        print("Added resource snapshit at " + time_string)
-
-        await asyncio.sleep(60)  # Sleep for 2 minutes (120 seconds)
-
-
-@app.get("/a")
-async def kills():
-    return {"a": 1}
-
+@app.get("/logged_resources")
+async def logged_resources(player_id: int, last_minutes: int):
+    return service.get_last_N_minute_resources(player_id, last_minutes)
 
 if __name__ == "__main__":
     import uvicorn
