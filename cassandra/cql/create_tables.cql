@@ -62,24 +62,24 @@ CREATE TABLE game_data_by_player_id (
 );
 
 
-// Stores all the stats save requests by time(with precision to seconds) and player id as logs: GAME_ANALISYS_DATA
-CREATE TABLE player_stats_by_time_logs (
-    time text,
+// Stores all the stats save requests by time(with precision to minutes) and player id as logs: GAME_ANALISYS_DATA
+CREATE TABLE player_stats_by_player_id_and_time_logs (
     player_id int,
+    time text,
     player_name text,
     level int,
     power int,
     exp int,
     hunters int,
     masters int,
-    PRIMARY KEY (text, player_id)
+    PRIMARY KEY (player_id, time)
 );
 
 
-// Stores all the resource save requests by time(with precision to seconds) and player id as logs: GAME_ANALISYS_DATA
-CREATE TABLE game_data_by_time_logs (
-    time text,
+// Stores all the resource save requests by time(with precision to minutes) and player id as logs: GAME_ANALISYS_DATA
+CREATE TABLE game_data_by_player_id_and_time_logs (
     player_id int,
+    time text,
     player_name text,
 
     // Utils
@@ -119,6 +119,6 @@ CREATE TABLE game_data_by_time_logs (
     nostrix int,
     wolfsbane int,
 
-    PRIMARY KEY(time, player_id)
+    PRIMARY KEY(player_id, time)
 );
 
