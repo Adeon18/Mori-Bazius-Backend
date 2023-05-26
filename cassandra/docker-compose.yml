@@ -4,7 +4,7 @@ name: "hunters"
 services:
   cassandra-node-1:
     container_name: "cassandra-node-1"
-    image: cassandra:latest
+    image: cassandra:3
     networks:
         - hunters-game-network
     healthcheck:
@@ -16,7 +16,7 @@ services:
       - "9042:9042"
   cassandra-node-2:
     container_name: "cassandra-node-2"
-    image: cassandra:latest
+    image: cassandra:3
     networks:
         - hunters-game-network 
     environment:
@@ -31,7 +31,7 @@ services:
       retries: 5
   cassandra-node-3:
     container_name: "cassandra-node-3"
-    image: cassandra:latest
+    image: cassandra:3
     restart: unless-stopped
     networks:
         - hunters-game-network

@@ -20,3 +20,12 @@ cd ./../..
 cd app/RegistrationLoginValidation
 docker compose up --build -d
 cd ./../..
+
+cd app/SnapshotService
+./build-and-run.sh
+cd ./../..
+
+cd app/StatsProcessing
+docker compose up --build -d
+./submit.sh
+cd ./../..

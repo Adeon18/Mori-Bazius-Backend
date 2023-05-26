@@ -79,3 +79,11 @@ Example body of request:
     "kingslayers_silver_sword": 0
 }
 ```
+
+</br>
+
+**GET** average growth of player resources.
+
+```
+localhost:8000/average?player_id=<player_id>
+```
