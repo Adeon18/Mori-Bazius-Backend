@@ -79,3 +79,11 @@ Example body of request:
     "kingslayers_silver_sword": 0
 }
 ```
+
+</br>
+
+**GET** leaderboard
+
+```
+localhost:8000/leaderboard?limit=<limit>
+```

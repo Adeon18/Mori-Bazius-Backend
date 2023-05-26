@@ -36,6 +36,6 @@ class App:
         async def game_data_set_resources(player_id: int, resources: Resources):
             return self.service.set_game_resources(player_id, resources)
 
-        @self.app.get("/game_data/leagueboard")
-        async def game_data_leagueboard(limit: int):
-            return self.service.get_game_leagueboard(limit)
+        @self.app.get("/game_data/leaderboard")
+        async def game_data_leaderboard(limit: int):
+            return self.service.get_game_leaderboard(limit)
