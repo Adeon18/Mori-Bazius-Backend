@@ -15,6 +15,8 @@ async def lifespan(app: FastAPI):
     # Startup
     asyncio.get_event_loop().create_task(service.make_stat_snapshot())
     asyncio.get_event_loop().create_task(service.make_resource_snapshot())
+    asyncio.get_event_loop().create_task(service.delete_old_stat_snapshot())
+    asyncio.get_event_loop().create_task(service.delete_old_resource_snapshot())
     yield
 
 
