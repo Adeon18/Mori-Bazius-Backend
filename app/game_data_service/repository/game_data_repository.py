@@ -22,3 +22,6 @@ class GameDataRepository:
 
     def get_leaderboard(self, limit: int):
         pass
+
+    def get_average_resources(self, player_id: int):
+        pass

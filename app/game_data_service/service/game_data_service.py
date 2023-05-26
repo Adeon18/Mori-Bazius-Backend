@@ -78,3 +78,6 @@ class GameDataService:
 
     def get_leaderboard(self, limit: int):
         return self.repo.get_leaderboard(limit)
+
+    def get_average_resources(self, player_id: int):
+        return self.repo.get_average_resources(player_id)

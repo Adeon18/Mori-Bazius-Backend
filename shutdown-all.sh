@@ -19,6 +19,16 @@ cd RegistrationLoginValidation
 docker compose down
 cd ./../..
 
+cd app
+cd SnapshotService
+./stop.sh
+cd ./../..
+
+cd app
+cd StatsProcessing
+docker compose down
+cd ./../..
+
 cd cassandra
 ./stop.sh
 cd ..
