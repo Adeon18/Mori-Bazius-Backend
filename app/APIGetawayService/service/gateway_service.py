@@ -4,7 +4,7 @@ from common.game_data.user import User
 from kafka import KafkaProducer
 
 import requests
-
+import consul
 import json
 
 KAFKA_SERVER = 'kafka-server:9092'
@@ -13,7 +13,7 @@ GAME_STATS_TOPIC = 'game-stats'
 
 REGISTER_SERVICE_URL = 'http://register-service:8080/user/'
 LOGIN_SERVICE_URL = 'http://login-service:8080/login/user/'
-VALIDATION_SERVICE_URL = 'http://validation-service:8080/validate/'
+VALIDATION_SERVICE_URL = 'http://validation-service:8080/c/'
 
 STATS_GAME_DATA_URL = 'http://game_data:8000/stats?player_id='
 RESOURCES_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
@@ -23,16 +23,24 @@ AVERAGE_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
 class GatewayService:
     def __init__(self):
         self.producer = KafkaProducer(bootstrap_servers=[KAFKA_SERVER])
+        self.consul_service = consul.Consul(host="consul")
 
     # Returns a boolean whether the validation was successful
     def verify_request(self, uid: str, token: str):
+        url, port = self.get_address("validation")
         response = requests.post(
-            url=VALIDATION_SERVICE_URL, json={"uid": uid, "token": token})
+            url=f"http://{url}:{port}/validate", json={"uid": uid, "token": token})
 
         if response.text == "true":
             return True
 
         return False
+
+    def get_address(self, service_name):
+        consul_info = self.consul_service.health.service(service_name)[1]
+        address = random.choice(consul_info)["Service"]["Address"]
+        port = random.choice(consul_info)["Service"]["Port"]
+        return address, port
 
     def handle_register_operation(self, user_data: User):
         response = requests.post(
