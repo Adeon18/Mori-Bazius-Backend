@@ -6,6 +6,7 @@ from kafka import KafkaProducer
 import requests
 import consul
 import json
+import random
 
 KAFKA_SERVER = 'kafka-server:9092'
 GAME_DATA_TOPIC = 'game-data'
@@ -55,7 +56,8 @@ class GatewayService:
         return response.text
 
     def get_game_resources(self, player_id: int):
-        response = requests.get(url=RESOURCES_GAME_DATA_URL + str(player_id))
+        url, port = self.get_address("game-data")
+        response = requests.get(url=f'http://{url}:{port}/resources?player_id=' + str(player_id))
 
         return response.json()
 
@@ -74,7 +76,8 @@ class GatewayService:
         return {"success": True, "topic": metadata.topic}
 
     def get_game_stats(self, player_id: int):
-        response = requests.get(url=STATS_GAME_DATA_URL + str(player_id))
+        url, port = self.get_address("game-data")
+        response = requests.get(url=f"http://{url}:{port}/stats?player_id=" + str(player_id))
 
         return response.json()
 
@@ -96,6 +99,7 @@ class GatewayService:
         return {"limit": limit}
 
     def get_game_data_average(self, player_id: int):
-        response = requests.get(url=AVERAGE_GAME_DATA_URL + str(player_id))
+        url, port = self.get_address("game-data")
+        response = requests.get(url=f'http://{url}:{port}/resources?player_id=' + str(player_id))
 
         return response.json()
