@@ -58,3 +58,29 @@ class SnapShotService:
             print("Added resource snapshit at " + time_string)
 
             await asyncio.sleep(120)  # Sleep for 2 minutes (120 seconds)
+
+    async def delete_old_stat_snapshot(self):
+        while True:
+            current_time = datetime.now()
+
+            time_minus_N = current_time - timedelta(minutes=120)
+            time = time_minus_N.strftime("%Y-%m-%d-%H-%M")
+
+            self.repo.delete_old_stats_snapshots(time)
+
+            print("Deleted stat snapshots that are older than 120 mins")
+
+            await asyncio.sleep(7200)  # Sleep for 2 hours (7200 seconds)
+
+    async def delete_old_resource_snapshot(self):
+        while True:
+            current_time = datetime.now()
+
+            time_minus_N = current_time - timedelta(minutes=120)
+            time = time_minus_N.strftime("%Y-%m-%d-%H-%M")
+
+            self.repo.delete_old_resource_snapshots(time)
+
+            print("Deleted resource snapshots that are older than 120 mins")
+
+            await asyncio.sleep(7200)  # Sleep for 2 hours (7200 seconds)
