@@ -1,7 +1,7 @@
 import hazelcast
 
 
-class ValidationRepositoryInMemory:
+class ValidationRepositoryHaz:
     def __init__(self):
         self.logged_users = None
         self.client = hazelcast.HazelcastClient(cluster_members=["hazelcast1"])
