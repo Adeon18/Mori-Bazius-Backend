@@ -9,4 +9,4 @@ mongosh "${MONGODB_HOST}:${MONGODB_PORT}/${DATABASE_NAME}" \
   --eval "db.createCollection('guilds')" \
   --eval "db.createCollection('members')"
 
-echo "Created."
+echo "Created guilds and members tables."
