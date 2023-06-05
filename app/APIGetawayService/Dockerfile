@@ -11,7 +11,8 @@ WORKDIR /opt/app
 RUN pip install uvicorn
 RUN pip install fastapi
 RUN pip install kafka-python
-RUN pip install requests 
+RUN pip install requests
+RUN pip install python-consul
 
 COPY APIGetawayService/ .
 

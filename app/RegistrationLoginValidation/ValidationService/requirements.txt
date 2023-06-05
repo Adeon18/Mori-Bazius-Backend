@@ -28,3 +28,5 @@ uvicorn==0.21.1
 Werkzeug==2.2.3
 wrapt==1.15.0
 zipp==3.15.0
+hazelcast-python-client==5.1
+python-consul

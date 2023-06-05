@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd app/RegistrationLoginValidation
+docker compose up --build -d
+cd ./../..
+
 cd cassandra
 ./run-and-configure.sh
 cd ..
@@ -17,6 +21,11 @@ cd app/APIGetawayService
 ./run-api-gateway.sh
 cd ./../..
 
-cd app/RegistrationLoginValidation
+cd app/SnapshotService
+./build-and-run.sh
+cd ./../..
+
+cd app/StatsProcessing
 docker compose up --build -d
+./submit.sh
 cd ./../..

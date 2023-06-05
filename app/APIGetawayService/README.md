@@ -41,7 +41,7 @@ Example of request body:
 
 **GET** the top `limit` most powerful players by power.
 ```
-localhost:9000/game_data/leagueboard?limit=<limit>
+localhost:9000/game_data/leaderboard?limit=<limit>
 ```
 
 </br>
@@ -112,4 +112,12 @@ Example body of request:
     "silver_sword": 0,
     "kingslayers_silver_sword": 0
 }
+```
+
+</br>
+
+**GET** average growth of player resources.
+
+```
+localhost:9000/game_data/average?player_id=<player_id>
 ```

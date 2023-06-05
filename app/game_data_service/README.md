@@ -79,3 +79,18 @@ Example body of request:
     "kingslayers_silver_sword": 0
 }
 ```
+
+</br>
+
+
+**GET** leaderboard
+
+```
+localhost:8000/leaderboard?limit=<limit>
+```
+
+**GET** average growth of player resources.
+
+```
+localhost:8000/average?player_id=<player_id>
+```

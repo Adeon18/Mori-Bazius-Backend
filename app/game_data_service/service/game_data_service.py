@@ -1,6 +1,8 @@
 from aiokafka import AIOKafkaConsumer
 import asyncio
 import os
+import consul
+import socket
 
 from repository.game_data_repository import GameDataRepository
 from repository.cassandra_repository import CassandraRepository
@@ -12,10 +14,18 @@ class GameDataService:
     def __init__(self, repo: GameDataRepository) -> None:
         self.repo = repo
         kafka_address = os.getenv("KAFKA_ADDRESS", "localhost:29092")
+
+        self.consul_service = consul.Consul(host="consul")
+        hostname = socket.gethostname()
+        self.id = os.environ["SERVICE_ID"]
+        check = consul.Check.http(f"http://{hostname}:8000/health", "10s", "2s", "20s")
+        self.name = "game-data"
+        self.consul_service.agent.service.register(self.name, service_id=self.name + self.id, address=hostname,
+                                                   port=8000, check=check)
         
         self.event_loop = asyncio.get_event_loop()
-        self.data_consumer = AIOKafkaConsumer("game-data", loop=self.event_loop, bootstrap_servers=kafka_address)
-        self.stats_consumer = AIOKafkaConsumer("game-stats", loop=self.event_loop, bootstrap_servers=kafka_address)
+        self.data_consumer = AIOKafkaConsumer("game-data", loop=self.event_loop, bootstrap_servers=kafka_address, group_id="game_data_consumer", auto_offset_reset="earliest", enable_auto_commit=True)
+        self.stats_consumer = AIOKafkaConsumer("game-stats", loop=self.event_loop, bootstrap_servers=kafka_address, group_id="game_data_consumer", auto_offset_reset="earliest", enable_auto_commit=True)
     
     def new_service_with_cassandra():
         return GameDataService(CassandraRepository())
@@ -78,3 +88,6 @@ class GameDataService:
 
     def get_leaderboard(self, limit: int):
         return self.repo.get_leaderboard(limit)
+
+    def get_average_resources(self, player_id: int):
+        return self.repo.get_average_resources(player_id)

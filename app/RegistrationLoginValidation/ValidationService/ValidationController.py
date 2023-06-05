@@ -20,6 +20,10 @@ class LoginController:
             res = self.service.validate_user(user.uid, user.token)
             return res
 
+        @self.app.get("/health")
+        def health_check():
+            return True
+
 
 controller = LoginController()
 

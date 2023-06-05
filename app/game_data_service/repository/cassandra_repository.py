@@ -97,9 +97,6 @@ class CassandraRepository(GameDataRepository):
         query = f"""
         SELECT * FROM hunters.player_stats_by_player_id
         """
-        if limit is not None:
-            query += f" LIMIT {limit}"
-
 
         result_set = self.session.execute(query)
 
@@ -112,4 +109,26 @@ class CassandraRepository(GameDataRepository):
             row_data = Row(*row)
             leaderboard_data.append(row_data._asdict())
 
+        leaderboard_data = sorted(leaderboard_data, key=lambda x: x["power"], reverse=True)
+        if limit is not None:
+            leaderboard_data = leaderboard_data[:limit]
+
         return leaderboard_data
+
+    def get_average_resources(self, player_id: int):
+        query = f"""
+        SELECT * FROM hunters.average_growth_by_player_id WHERE player_id = {player_id}
+        """
+
+        res = self.session.execute(query)
+        json = []
+        for row in res:
+            result = {}
+            for column in row._fields:
+                result[column] = getattr(row, column)
+            json.append(result)
+            break
+
+
+        return json[0] if len(json) > 0 else {}
+
