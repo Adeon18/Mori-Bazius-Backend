@@ -52,3 +52,7 @@ async def leaderboard(limit: int):
 @app.get("/average")
 async def average_resources(player_id: int):
     return service.get_average_resources(player_id)
+
+@app.get("/health")
+def healthcheck():
+    return True
