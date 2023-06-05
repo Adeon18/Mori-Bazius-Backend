@@ -1,0 +1,21 @@
+version : "3.9"
+name: "hunters2"
+
+services:
+  game-data:
+    container_name: "guilds-service"
+    ports:
+      - 6969:6969
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    networks:
+      - hunters-game-network
+    environment:
+      MONGO_HOST: "mongodb"
+      MONGO_PORT: 27017
+      MONGO_DB: "guilds"
+
+networks:
+  hunters-game-network:
+    name: "hunters-game-network"

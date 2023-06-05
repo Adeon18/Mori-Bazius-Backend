@@ -1,0 +1,35 @@
+################################
+
+GET localhost:6969/guilds
+
+################################
+
+POST localhost:6969/guilds/new
+Content-Type: application/json
+
+{
+    "name": "MyGuild",
+    "description": "Best guild ever",
+    "limit_members": 20,
+    "player_id": 1,
+    "player_name": "alorthius"
+}
+
+################################
+
+POST localhost:6969/guilds/ObjectId('647e159aa1a5c7dad697dd56')/members/2
+Content-Type: application/json
+
+{
+    "gid": "ObjectId('647e159aa1a5c7dad697dd56')",
+    "player_id": 2,
+    "player_name": "alorthius"
+}
+
+################################
+
+GET localhost:6969/members/ObjectId('647e159aa1a5c7dad697dd56')
+
+################################
+
+################################
