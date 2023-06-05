@@ -41,7 +41,7 @@ Example of request body:
 
 **GET** the top `limit` most powerful players by power.
 ```
-localhost:9000/game_data/leagueboard?limit=<limit>
+localhost:9000/game_data/leaderboard?limit=<limit>
 ```
 
 </br>

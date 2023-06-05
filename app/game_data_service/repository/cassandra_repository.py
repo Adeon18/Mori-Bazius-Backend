@@ -97,9 +97,6 @@ class CassandraRepository(GameDataRepository):
         query = f"""
         SELECT * FROM hunters.player_stats_by_player_id
         """
-        if limit is not None:
-            query += f" LIMIT {limit}"
-
 
         result_set = self.session.execute(query)
 
@@ -111,6 +108,10 @@ class CassandraRepository(GameDataRepository):
         for row in result_set:
             row_data = Row(*row)
             leaderboard_data.append(row_data._asdict())
+
+        leaderboard_data = sorted(leaderboard_data, key=lambda x: x["power"], reverse=True)
+        if limit is not None:
+            leaderboard_data = leaderboard_data[:limit]
 
         return leaderboard_data
 
@@ -130,4 +131,4 @@ class CassandraRepository(GameDataRepository):
 
 
         return json[0] if len(json) > 0 else {}
-    
+
