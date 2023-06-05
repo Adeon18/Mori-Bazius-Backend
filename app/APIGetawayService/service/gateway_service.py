@@ -18,6 +18,7 @@ VALIDATION_SERVICE_URL = 'http://validation-service:8080/validate/'
 STATS_GAME_DATA_URL = 'http://game_data:8000/stats?player_id='
 RESOURCES_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
 LEADERBOARD_URL = "http://game_data:8000/leaderboard?limit="
+AVERAGE_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
 
 
 class GatewayService:
@@ -86,5 +87,10 @@ class GatewayService:
 
     def get_game_leaderboard(self, limit):
         response = requests.get(url=LEADERBOARD_URL + str(limit))
+
+        return response.json()
+
+    def get_game_data_average(self, player_id: int):
+        response = requests.get(url=AVERAGE_GAME_DATA_URL + str(player_id))
 
         return response.json()

@@ -39,3 +39,7 @@ class App:
         @self.app.get("/game_data/leaderboard")
         async def game_data_leaderboard(limit: int):
             return self.service.get_game_leaderboard(limit)
+        
+        @self.app.get("/game_data/average")
+        async def game_data_average(player_id: int):
+            return self.service.get_game_data_average(player_id)

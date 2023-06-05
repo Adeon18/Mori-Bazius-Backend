@@ -122,3 +122,27 @@ CREATE TABLE game_data_by_player_id_and_time_logs (
     PRIMARY KEY(player_id, time)
 );
 
+CREATE TABLE hunters.average_growth_by_player_id (
+    player_id INT PRIMARY KEY,
+    avg_growth_monster_bone DOUBLE,
+    avg_growth_leather_scraps DOUBLE,
+    avg_growth_oil DOUBLE,
+    avg_growth_armor DOUBLE,
+    avg_growth_mastercrafted_armor DOUBLE,
+    avg_growth_silver_sword DOUBLE,
+    avg_growth_kingslayers_silver_sword DOUBLE,
+    avg_growth_steel_sword DOUBLE,
+    avg_growth_kingslayers_steel_sword DOUBLE,
+    avg_growth_diamond_dust DOUBLE,
+    avg_growth_diamond DOUBLE,
+    avg_growth_dark_steel_ingot DOUBLE,
+    avg_growth_meteorite_silver_ingot DOUBLE,
+    avg_growth_green_gold_ingot DOUBLE,
+    avg_growth_swallow_potion DOUBLE,
+    avg_growth_dark_steel_ore DOUBLE,
+    avg_growth_meteorite_silver_ore DOUBLE,
+    avg_growth_green_gold_ore DOUBLE,
+    avg_growth_arenaria DOUBLE,
+    avg_growth_nostrix DOUBLE,
+    avg_growth_wolfsbane DOUBLE
+);

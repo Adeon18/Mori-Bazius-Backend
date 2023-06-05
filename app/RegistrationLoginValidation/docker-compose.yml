@@ -28,19 +28,80 @@ services:
       postgresql:
         condition: service_healthy
 
-  validation-service:
-    container_name: "validation-service"
+  validation-service1:
+    container_name: "validation-service1"
     build:
       context: ValidationService
       dockerfile: Dockerfile
-    ports:
-      - "8082:8080"
     networks:
       - hunters-game-network
     depends_on:
       postgresql:
         condition: service_healthy
+    environment:
+      - SERVICE_ID=1
 
+  validation-service2:
+    container_name: "validation-service2"
+    build:
+      context: ValidationService
+      dockerfile: Dockerfile
+    networks:
+      - hunters-game-network
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      - SERVICE_ID=2
+
+  validation-service3:
+    container_name: "validation-service3"
+    build:
+      context: ValidationService
+      dockerfile: Dockerfile
+    networks:
+      - hunters-game-network
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      - SERVICE_ID=3
+
+  hazelcast1:
+      image: hazelcast/hazelcast
+      networks:
+        - hunters-game-network
+
+  hazelcast2:
+    image: hazelcast/hazelcast
+    networks:
+      - hunters-game-network
+
+  hazelcast3:
+    image: hazelcast/hazelcast
+    networks:
+      - hunters-game-network
+
+  mc:
+    image: hazelcast/management-center
+    networks:
+      - hunters-game-network
+    ports:
+      - "8090:8080"
+
+  consul:
+    build:
+      context: ../consul
+      dockerfile: Dockerfile
+    networks:
+      - hunters-game-network
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+      - "8600:8600/tcp"
+    volumes:
+      - ./consul/server.json:/consul/config/server1.json:ro
+    command: "agent -bootstrap-expect=1"
 
   postgresql:
     container_name: "postgresql"

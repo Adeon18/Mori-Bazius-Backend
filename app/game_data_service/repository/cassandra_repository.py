@@ -114,3 +114,21 @@ class CassandraRepository(GameDataRepository):
             leaderboard_data = leaderboard_data[:limit]
 
         return leaderboard_data
+
+    def get_average_resources(self, player_id: int):
+        query = f"""
+        SELECT * FROM hunters.average_growth_by_player_id WHERE player_id = {player_id}
+        """
+
+        res = self.session.execute(query)
+        json = []
+        for row in res:
+            result = {}
+            for column in row._fields:
+                result[column] = getattr(row, column)
+            json.append(result)
+            break
+
+
+        return json[0] if len(json) > 0 else {}
+
