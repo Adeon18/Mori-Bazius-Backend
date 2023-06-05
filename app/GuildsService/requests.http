@@ -4,6 +4,14 @@ GET localhost:6969/guilds
 
 ################################
 
+GET localhost:6969/members?gid=647e4611bad0e62d2ad4252b
+
+################################
+
+GET localhost:6969/guild?player_id=2
+
+################################
+
 POST localhost:6969/guilds/new
 Content-Type: application/json
 
@@ -17,30 +25,22 @@ Content-Type: application/json
 
 ################################
 
-POST localhost:6969/guilds/647e3ea7ef9beabc494b9450/members/4
+POST localhost:6969/guilds/members/new
 Content-Type: application/json
 
 {
-    "gid": "647e3ea7ef9beabc494b9450",
-    "player_id": 4,
+    "gid": "647e4611bad0e62d2ad4252b",
+    "player_id": 1,
     "player_name": "alorthius"
 }
 
 ################################
 
-DELETE localhost:6969/guilds/647e3ea7ef9beabc494b9450/members/4
+DELETE localhost:6969/guilds/leave?gid=647e4611bad0e62d2ad4252b&player_id=1
 Content-Type: application/json
 
-{
-    "gid": "647e3ea7ef9beabc494b9450",
-    "player_id": 4,
-    "player_name": "alorthius"
-}
-
 ################################
 
-GET localhost:6969/members/647e3ea7ef9beabc494b9450
+DELETE localhost:6969/guilds/delete?gid=647e4611bad0e62d2ad4252b
 
 ################################
-
-DELETE localhost:6969/guilds/647e3ea7ef9beabc494b9450/

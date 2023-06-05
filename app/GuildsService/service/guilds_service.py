@@ -20,6 +20,13 @@ class GuildsService:
         members = list(self.members.find({"gid": gid}))
         return members
 
+    async def get_guild_by_member(self, player_id: int):
+        entry = self.members.find_one({"player_id": player_id})
+        if entry:
+            guild = self.guilds.find_one({"_id": ObjectId(entry["gid"])})
+            guild["_id"] = str(guild["_id"])  # parse hex
+            return guild
+
     async def create_guild(self, guild: GuildCreation):
         result = self.guilds.insert_one(Guild(**guild.dict()).dict())
         if result.acknowledged:
@@ -40,14 +47,14 @@ class GuildsService:
         self.guilds.update_one({"_id": ObjectId(member.gid)}, {"$inc": {"num_members": 1}})
         return True
 
-    async def leave_guild(self, member: Member):
-        self.guilds.update_one({"_id": ObjectId(member.gid)}, {"$inc": {"num_members": -1}})
-        self.members.delete_one(member.dict())
-        guild = self.guilds.find_one({"_id": ObjectId(member.gid)})
+    async def leave_guild(self, gid: str, player_id: int):
+        self.guilds.update_one({"_id": ObjectId(gid)}, {"$inc": {"num_members": -1}})
+        self.members.delete_one({"gid": gid, "player_id": player_id})
+        guild = self.guilds.find_one({"_id": ObjectId(gid)})
         # if not guild:
         #     return False
         if guild["num_members"] == 0:
-            await self.delete_guild(member.gid)
+            await self.delete_guild(gid)
         return True
 
     async def delete_guild(self, gid: str):

@@ -11,7 +11,7 @@ class Guild(BaseModel):
 
 
 class Member(BaseModel):
-    gid: str
+    gid: Union[str, None]
     player_id: int
     player_name: str
 
