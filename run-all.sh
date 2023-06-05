@@ -13,8 +13,7 @@ cd kafka
 cd ..
 
 cd app/game_data_service
-./build.sh
-./run.sh
+./build-and-run.sh
 cd ./../..
 
 cd app/APIGetawayService
