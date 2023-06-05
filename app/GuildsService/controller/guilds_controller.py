@@ -11,36 +11,37 @@ class GuildsController:
         self.service = GuildsService()
 
         @self.app.get("/guilds")
-        def get_guilds():
-            r = self.service.get_guilds()
-            print(r)
+        async def get_guilds():
+            r = await self.service.get_guilds()
             return str(r)
 
         @self.app.get("/members/{gid}")
-        def get_guilds(gid: str):
-            r = self.service.get_members(gid)
-            print(r)
+        async def get_guilds(gid: str):
+            r = await self.service.get_members(gid)
             return str(r)
 
         @self.app.post("/guilds/new")
-        def create_guild(new_guild: GuildCreation):
-            gid = self.service.create_guild(new_guild)
-            print(gid)
+        async def create_guild(new_guild: GuildCreation):
+            gid = await self.service.create_guild(new_guild)
             if gid:
                 member = Member(gid=gid, player_id=new_guild.player_id, player_name=new_guild.player_name)
-                self.service.join_guild(member)
+                await self.service.join_guild(member)
+                return member
 
         @self.app.post("/guilds/{gid}/members/{player_id}")
-        def join_guild(member: Member):
-            self.service.join_guild(member)
+        async def join_guild(member: Member):
+            await self.service.join_guild(member)
+            return member
 
         @self.app.delete("/guilds/{guild_id}/members/{player_id}")
-        def leave_guild(member: Member):
-            self.service.leave_guild(member)
+        async def leave_guild(member: Member):
+            await self.service.leave_guild(member)
+            return member
 
         @self.app.delete("/guilds/{guild_id}/")
-        def delete_guild(guild_id: str):
-            self.service.delete_guild(guild_id)
+        async def delete_guild(guild_id: str):
+            await self.service.delete_guild(guild_id)
+            return guild_id
 
 
 

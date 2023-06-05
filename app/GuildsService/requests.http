@@ -17,19 +17,30 @@ Content-Type: application/json
 
 ################################
 
-POST localhost:6969/guilds/ObjectId('647e159aa1a5c7dad697dd56')/members/2
+POST localhost:6969/guilds/647e3ea7ef9beabc494b9450/members/4
 Content-Type: application/json
 
 {
-    "gid": "ObjectId('647e159aa1a5c7dad697dd56')",
-    "player_id": 2,
+    "gid": "647e3ea7ef9beabc494b9450",
+    "player_id": 4,
     "player_name": "alorthius"
 }
 
 ################################
 
-GET localhost:6969/members/ObjectId('647e159aa1a5c7dad697dd56')
+DELETE localhost:6969/guilds/647e3ea7ef9beabc494b9450/members/4
+Content-Type: application/json
+
+{
+    "gid": "647e3ea7ef9beabc494b9450",
+    "player_id": 4,
+    "player_name": "alorthius"
+}
 
 ################################
 
+GET localhost:6969/members/647e3ea7ef9beabc494b9450
+
 ################################
+
+DELETE localhost:6969/guilds/647e3ea7ef9beabc494b9450/

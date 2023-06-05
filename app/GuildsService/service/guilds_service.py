@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 from models.guild import Guild, Member, GuildCreation
 from fastapi import HTTPException
 from typing import Union
@@ -11,44 +12,45 @@ class GuildsService:
         self.guilds = db['guilds']
         self.members = db['members']
 
-    def get_guilds(self):
+    async def get_guilds(self):
         guilds = list(self.guilds.find())
         return {"guilds": guilds}
 
-    def get_members(self, gid: str):
+    async def get_members(self, gid: str):
         members = list(self.members.find({"gid": gid}))
         return members
 
-    def create_guild(self, guild: GuildCreation):
-        result = self.guilds.insert_one(guild.dict())
+    async def create_guild(self, guild: GuildCreation):
+        result = self.guilds.insert_one(Guild(**guild.dict()).dict())
         if result.acknowledged:
             return str(result.inserted_id)
         else:
             return False
 
-    def join_guild(self, member: Member):
-        member_exists = self.members.find_one(member.dict())
+    async def join_guild(self, member: Member):
+        # member_exists = self.members.find_one(member.dict())
         # if member_exists:
         #     return False
 
-        guild = self.guilds.find_one({"_id": member.gid})
+        # guild = self.guilds.find_one({"_id": ObjectId(member.gid)})
         # if not guild:
         #     return False
 
         self.members.insert_one(member.dict())
-        self.guilds.update_one({"_id": member.gid}, {"$inc": {"num_members": 1}})
+        self.guilds.update_one({"_id": ObjectId(member.gid)}, {"$inc": {"num_members": 1}})
         return True
 
-    def leave_guild(self, member: Member):
-        self.guilds.update_one({"_id": member.gid}, {"$inc": {"num_members": -1}})
+    async def leave_guild(self, member: Member):
+        self.guilds.update_one({"_id": ObjectId(member.gid)}, {"$inc": {"num_members": -1}})
         self.members.delete_one(member.dict())
-        guild = self.guilds.find_one({"_id": member.gid})
+        guild = self.guilds.find_one({"_id": ObjectId(member.gid)})
         # if not guild:
         #     return False
         if guild["num_members"] == 0:
-            self.delete_guild(member.gid)
+            await self.delete_guild(member.gid)
         return True
 
-    def delete_guild(self, gid: str):
-        self.guilds.delete_one({"_id": gid})
+    async def delete_guild(self, gid: str):
+        self.guilds.delete_one({"_id": ObjectId(gid)})
+        self.members.delete_many({"gid": gid})
         return True

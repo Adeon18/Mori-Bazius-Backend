@@ -4,7 +4,6 @@ from typing import Union
 
 
 class Guild(BaseModel):
-    gid: Union[str, None]
     name: str
     description: str
     num_members: int
@@ -25,3 +24,9 @@ class GuildCreation(BaseModel):
 
     player_id: int
     player_name: str
+
+
+if __name__ == "__main__":
+    a = GuildCreation(name="name", description="description", limit_members=20, player_id=1, player_name="name")
+    print(a)
+    print(Guild(**a.dict()))
