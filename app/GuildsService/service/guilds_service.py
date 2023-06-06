@@ -14,6 +14,9 @@ class GuildsService:
 
     async def get_guilds(self):
         guilds = list(self.guilds.find())
+        if guilds:
+            for doc in guilds:
+                doc["_id"] = str(doc["_id"])
         return {"guilds": guilds}
 
     async def get_members(self, gid: str):
@@ -31,8 +34,6 @@ class GuildsService:
         result = self.guilds.insert_one(Guild(**guild.dict()).dict())
         if result.acknowledged:
             return str(result.inserted_id)
-        else:
-            return False
 
     async def join_guild(self, member: Member):
         # member_exists = self.members.find_one(member.dict())
