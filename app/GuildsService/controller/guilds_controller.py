@@ -16,7 +16,7 @@ class GuildsController:
             return str(r)
 
         @self.app.get("/members")
-        async def get_guilds(gid: str):
+        async def get_members(gid: str):
             r = await self.service.get_members(gid)
             return str(r)
 
