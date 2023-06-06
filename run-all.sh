@@ -12,9 +12,16 @@ cd kafka
 ./run-cluster.sh
 cd ..
 
-cd app/game_data_service
-./build.sh
+cd mongo
 ./run.sh
+cd ..
+
+cd app/game_data_service
+./build-and-run.sh
+cd ./../..
+
+cd app/GuildsService
+docker compose up --build -d
 cd ./../..
 
 cd app/APIGetawayService

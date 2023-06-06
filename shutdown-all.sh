@@ -4,9 +4,18 @@ cd kafka
 ./shutdown-cluster.sh
 cd ..
 
+cd mongo
+docker compose down
+cd ..
+
 cd app
 cd game_data_service
 ./stop.sh
+cd ./../..
+
+cd app
+cd GuildsService
+docker compose down
 cd ./../..
 
 cd app

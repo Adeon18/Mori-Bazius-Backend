@@ -3,6 +3,7 @@ from service.gateway_service import GatewayService
 from common.game_data.stats import Stats
 from common.game_data.resources import Resources
 from common.game_data.user import User
+from common.game_data.guild import GuildCreation, Member
 
 
 class App:
@@ -43,3 +44,33 @@ class App:
         @self.app.get("/game_data/average")
         async def game_data_average(player_id: int):
             return self.service.get_game_data_average(player_id)
+
+        # HANDLING GUILDS
+        @self.app.get("/guilds")
+        async def get_guilds(limit: int):
+            return self.service.get_guilds(limit)
+
+        @self.app.get("/members")
+        async def get_members(gid: str):
+            return self.service.get_members(gid)
+
+        @self.app.get("/guild")
+        async def get_guild_by_member(player_id: int):
+            return self.service.get_guild_by_member(player_id)
+
+        @self.app.post("/guilds/new")
+        async def create_guild(new_guild: GuildCreation):
+            print(new_guild)
+            return self.service.create_guild(dict(new_guild))
+
+        @self.app.post("/guilds/members/new")
+        async def join_guild(member: Member):
+            return self.service.join_guild(member)
+
+        @self.app.delete("/guilds/leave")
+        async def leave_guild(gid: str, player_id: int):
+            return self.service.leave_guild(gid, player_id)
+
+        @self.app.delete("/guilds/delete")
+        async def delete_guild(gid: str):
+            return self.service.delete_guild(gid)

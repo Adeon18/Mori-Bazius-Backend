@@ -1,0 +1,23 @@
+version: "3.9"
+name: "hunters3"
+
+services:
+  mongodb:
+    container_name: "mongodb"
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: guilds
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - hunters-game-network
+#    volumes:
+#      - ./init_mongodb.sh:/docker-entrypoint-initdb.d/init_mongodb.sh
+
+networks:
+  hunters-game-network:
+    name: "hunters-game-network"
+
