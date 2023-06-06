@@ -1,6 +1,8 @@
 from common.game_data.stats import Stats
 from common.game_data.resources import Resources
 from common.game_data.user import User
+from common.game_data.guild import GuildCreation, Member
+
 from kafka import KafkaProducer
 
 import requests
@@ -20,6 +22,15 @@ STATS_GAME_DATA_URL = 'http://game_data:8000/stats?player_id='
 RESOURCES_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
 LEADERBOARD_URL = "http://game_data:8000/leaderboard?limit="
 AVERAGE_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
+
+# Guilds service urls
+GUILDS_URL = "http://guilds-service:6969/guilds"
+GUILD_MEMBERS_URL = "http://guilds-service:6969/members?gid={}"
+GUILD_BY_MEMBER_URL = "http://guilds-service:6969/guild?player_id={}"
+CREATE_GUILD_URL = "http://guilds-service:6969/guilds/new"
+JOIN_GUILD_URL = "http://guilds-service:6969/guilds/members/new"
+LEAVE_GUILD_URL = "http://guilds-service:6969/guilds/leave?gid={}&player_id={}"
+DELETE_GUILD_URL = "http://guilds-service:6969/guilds/delete?gid={}"
 
 
 class GatewayService:
@@ -48,13 +59,13 @@ class GatewayService:
         response = requests.post(
             url=REGISTER_SERVICE_URL, json={"username": user_data.username, "password": user_data.password})
 
-        return response.text
+        return response.json()
 
     def handle_login_operation(self, user_data: User):
         response = requests.post(
             url=LOGIN_SERVICE_URL, json=dict(user_data))
 
-        return response.text
+        return response.json()
 
     def get_game_resources(self, player_id: int):
         url, port = self.get_address("game-data")
@@ -106,3 +117,33 @@ class GatewayService:
         response = requests.get(url=f'http://{url}:{port}/resources?player_id=' + str(player_id))
 
         return response.json()
+
+    def get_guilds(self):
+        response = requests.get(GUILDS_URL)
+        return response.json()
+
+    def get_members(self, gid: str):
+        response = requests.get(GUILD_MEMBERS_URL.format(gid))
+        return response.json()
+
+    def get_guild_by_member(self, player_id: int):
+        response = requests.get(GUILD_BY_MEMBER_URL.format(player_id))
+        return response.json()
+
+    def create_guild(self, new_guild: GuildCreation):
+        print(new_guild)
+        response = requests.post(CREATE_GUILD_URL, json=new_guild)
+        return response.json()
+
+    def join_guild(self, member: Member):
+        response = requests.post(JOIN_GUILD_URL, json=member.dict())
+        return response.json()
+
+    def leave_guild(self, gid: str, player_id: int):
+        response = requests.delete(LEAVE_GUILD_URL.format(gid, player_id))
+        return response.json()
+
+    def delete_guild(self, gid: str):
+        response = requests.delete(DELETE_GUILD_URL.format(gid))
+        return response.json()
+
