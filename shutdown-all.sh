@@ -6,6 +6,7 @@ cd ..
 
 cd mongo
 docker compose down
+cd ..
 
 cd app
 cd game_data_service
