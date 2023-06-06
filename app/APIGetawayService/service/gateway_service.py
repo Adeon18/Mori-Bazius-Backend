@@ -24,7 +24,7 @@ LEADERBOARD_URL = "http://game_data:8000/leaderboard?limit="
 AVERAGE_GAME_DATA_URL = 'http://game_data:8000/resources?player_id='
 
 # Guilds service urls
-GUILDS_URL = "http://guilds-service:6969/guilds"
+GUILDS_URL = "http://guilds-service:6969/guilds?limit={}"
 GUILD_MEMBERS_URL = "http://guilds-service:6969/members?gid={}"
 GUILD_BY_MEMBER_URL = "http://guilds-service:6969/guild?player_id={}"
 CREATE_GUILD_URL = "http://guilds-service:6969/guilds/new"
@@ -118,8 +118,8 @@ class GatewayService:
 
         return response.json()
 
-    def get_guilds(self):
-        response = requests.get(GUILDS_URL)
+    def get_guilds(self, limit: int):
+        response = requests.get(GUILDS_URL.format(limit))
         return response.json()
 
     def get_members(self, gid: str):

@@ -47,8 +47,8 @@ class App:
 
         # HANDLING GUILDS
         @self.app.get("/guilds")
-        async def get_guilds():
-            return self.service.get_guilds()
+        async def get_guilds(limit: int):
+            return self.service.get_guilds(limit)
 
         @self.app.get("/members")
         async def get_members(gid: str):

@@ -1,46 +1,46 @@
 ################################
 
-GET localhost:6969/guilds
+GET localhost:9000/guilds?limit=1
 
 ################################
 
-GET localhost:6969/members?gid=647ee6aadd745cbada5b9c54
+GET localhost:9000/members?gid=647f048d9b7738c9ed41bb31
 
 ################################
 
-GET localhost:6969/guild?player_id=1
+GET localhost:9000/guild?player_id=1
 
 ################################
 
-POST localhost:6969/guilds/new
+POST localhost:9000/guilds/new
 Content-Type: application/json
 
 {
     "name": "MyGuild",
     "description": "Best guild ever",
     "limit_members": 20,
-    "player_id": 1,
+    "player_id": 2,
     "player_name": "alorthius"
 }
 
 ################################
 
-POST localhost:6969/guilds/members/new
+POST localhost:9000/guilds/members/new
 Content-Type: application/json
 
 {
-    "gid": "647e4611bad0e62d2ad4252b",
+    "gid": "647f04aa9b7738c9ed41bb33",
     "player_id": 1,
     "player_name": "alorthius"
 }
 
 ################################
 
-DELETE localhost:6969/guilds/leave?gid=647e4611bad0e62d2ad4252b&player_id=1
+DELETE localhost:9000/guilds/leave?gid=647f048d9b7738c9ed41bb31&player_id=2
 Content-Type: application/json
 
 ################################
 
-DELETE localhost:6969/guilds/delete?gid=647ee5582ea93610bbbd284e
+DELETE localhost:9000/guilds/delete?gid=647f04aa9b7738c9ed41bb33
 
 ################################

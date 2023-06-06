@@ -12,8 +12,8 @@ class GuildsService:
         self.guilds = db['guilds']
         self.members = db['members']
 
-    async def get_guilds(self):
-        guilds = list(self.guilds.find())
+    async def get_guilds(self, limit: int):
+        guilds = list(self.guilds.find())[:limit]
         if guilds:
             for doc in guilds:
                 doc["_id"] = str(doc["_id"])
