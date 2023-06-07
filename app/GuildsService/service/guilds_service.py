@@ -17,7 +17,8 @@ class GuildsService:
         if guilds:
             for doc in guilds:
                 doc["_id"] = str(doc["_id"])
-        return {"guilds": guilds}
+        return guilds
+        # return {"guilds": guilds}
 
     async def get_members(self, gid: str):
         members = list(self.members.find({"gid": gid}))
