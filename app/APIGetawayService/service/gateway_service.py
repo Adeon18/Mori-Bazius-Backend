@@ -108,7 +108,8 @@ class GatewayService:
         return {"success": True, "topic": metadata.topic}
 
     def get_game_leaderboard(self, limit):
-        response = requests.get(url=LEADERBOARD_URL + str(limit))
+        url, port = self.get_address("game-data")
+        response = requests.get(url=f"http://{url}:{port}/leaderboard?limit={limit}")
 
         return response.json()
 
