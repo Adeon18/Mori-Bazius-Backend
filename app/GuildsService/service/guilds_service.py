@@ -22,6 +22,9 @@ class GuildsService:
 
     async def get_members(self, gid: str):
         members = list(self.members.find({"gid": gid}))
+        if members:
+            for member in members:
+                member.pop("_id", None)
         return members
 
     async def get_guild_by_member(self, player_id: int):
