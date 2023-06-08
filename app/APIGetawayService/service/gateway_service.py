@@ -115,7 +115,7 @@ class GatewayService:
 
     def get_game_data_average(self, player_id: int):
         url, port = self.get_address("game-data")
-        response = requests.get(url=f'http://{url}:{port}/average?player_id=' + str(player_id))
+        response = requests.get(url=f'http://{url}:{port}/resources?player_id=' + str(player_id))
 
         return response.json()
 
