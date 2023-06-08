@@ -137,9 +137,9 @@ localhost:9000/game_data/average?player_id=<player_id>
 ```
 localhost:9000/guilds?limit=<limit>
 ```  
-Returns dict of format:
+Returns list of guilds:
 ```
-{"guilds": [...list limit of guilds...]}
+[...list of <limit> guilds...]
 ```
 One guild representation example:   
 ```
@@ -148,7 +148,7 @@ One guild representation example:
     'name': 'MyGuild',
     'description': 'Best guild ever',
     'num_members': 1,
-    'limit_members': 20}]
+    'limit_members': 20
 }
 ```
 
@@ -165,11 +165,9 @@ Returns list of format:
 One member representation example:
 ```
 {
-    '_id': ObjectId('647f0aabfc497f2074f9df01'),
     'gid': '647f0aabfc497f2074f9df00',
     'player_id': 2,
-    'player_name':
-    'alorthius'
+    'player_name': 'alorthius'
 }
 ```
 

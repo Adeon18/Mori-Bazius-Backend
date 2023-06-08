@@ -13,12 +13,12 @@ class GuildsController:
         @self.app.get("/guilds")
         async def get_guilds(limit: int):
             r = await self.service.get_guilds(limit)
-            return str(r)
+            return r
 
         @self.app.get("/members")
         async def get_members(gid: str):
             r = await self.service.get_members(gid)
-            return str(r)
+            return r
 
         @self.app.get("/guild")
         async def get_guild_by_member(player_id: int):
