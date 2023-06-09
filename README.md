@@ -1,45 +1,40 @@
-# Baza
-Or whatever we'll call this...
+# Mori Bazius Backend
 
+Backend for a fantasy witcher-inspired clicker game. The repository includes the code for all microservices.
 
-## How to launch and configure Cassandra
+Repository for frontend: [GitHub](https://github.com/alexg-lviv/Mori-Bazius-Frontend)
 
-Go into the `cassandra` directory - **Note: you MUST be inside the `cassandra` directory to continue!**
+More about the project: [Notion](https://www.notion.so/Mori-Bazius-547f28efb3ea41caa054075bb2b43c03?pvs=4)
 
-```sh
-./run-and-configure.sh
+## Usage
+
+To run all services:
+
+```bash
+./run-all.sh 
 ```
 
-_This will create a cluster and create tables with proper replication inside._
+To stop the services:
 
-To **stop** the cluster(from the `cassandra` directory):
-
-```sh
-./stop.sh
+```bash
+./shutdown-all.sh
 ```
 
-## How to write tests
+## Microservices
 
-1. Head into the `app/tests` directory.
-2. Create a new file `test_YOURNAMEHERE.py`
-3. In file import the module you want to test the following way:
+Documentation for using every microservice:
 
-```python
-import importlib.util
-spec = importlib.util.spec_from_file_location("your_name", "RELATIVE PATH TO MODULE FROM THE tests DIRECTORY")
-module_name_in_your_code = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(module_name_in_your_code)
-```
+* [API Gateway](https://github.com/Adeon18/Mori-Bazius-Backend/blob/main/app/APIGetawayService/README.md)
+* [Game Data Service](https://github.com/Adeon18/Mori-Bazius-Backend/blob/main/app/game_data_service/README.md)
+* [Registration/Login/Validation](https://github.com/Adeon18/Mori-Bazius-Backend/tree/main/app/RegistrationLoginValidation/README.md)
+* [Stats Processing](https://github.com/Adeon18/Mori-Bazius-Backend/tree/main/app/StatsProcessing/README.md)
+* [Snapshot Service](https://github.com/Adeon18/Mori-Bazius-Backend/tree/main/app/SnapshotService/README.md)
+* [Guilds Service](https://github.com/Adeon18/Mori-Bazius-Backend/tree/main/app/GuildsService/README.md)
 
-_Example:_
+## Authors
 
-```python
-import importlib.util
-spec = importlib.util.spec_from_file_location("tested_app", "../src/app.py")
-tested_app = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(tested_app)
-```
-
-4. Once finished, you can run them locally via `run-tests.sh` or just push to branch to run remotely.
-
-HM: _`run-tests.sh` gives you coverage if all tests are passed._
+* [Anna-Alina Bondrets](https://github.com/alorthius)
+* [Ostap Trush](https://github.com/Adeon18)
+* [Bohdan Ruban](https://github.com/iamthewalrus67)
+* [Oleksiy Hoyev](https://github.com/alexg-lviv)
+* [Oleksandra Stasiuk](https://github.com/oleksadobush)
